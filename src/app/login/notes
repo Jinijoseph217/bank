@@ -1,30 +1,106 @@
-Data Binding -Sharing data inside a component
+Data Binding   =   Sharing data inside a component
 
-1) One way Binding
-    
-html -> ts or ts -> html
+        1  one way Binding
 
-    ts:-component
-    html:-view
+            html -> ts   or ts -> html
 
-    1.1 Component to view (ts -> html)
-        a) string interpolation - {{expression}}
-        b) Property Binding - [attribute name]="Property"
-
-    1.2 View to Component (html -> ts)
-        a)Event Binding -(event name)="function name()" 
-        b)Event Binding using $(event) - (event name)="function name($event)  
-        c)Event Binding using template referencing variables-#variable name
-
-2)Two Way Binding
+        ts-component
+        html-view
 
 
-Angular Routing
+        1.1 component to view  (ts -> html)
+                a)  string interpolation -   {{expression}}
+                b)  property binding -    [attribute name]="property"
 
-    -To set path for a component
-    
-    {
-        path:'value',component:class name
-    }
+
+        1.2 view to component (html -> ts)
+                a) Event binding -     (event name) = "function name()"
+                                                                        .....event is an action.....
+                b)Event binding  using  $(event) -      (event name) = "functionname($event)"
+                c)EVent handling using template referencing variable    -   #variable name    
+
+
+
+        2    Two way binding
+
+
+       => Angular routing
+        = to set path for a component
+                syntax :
+
+                {
+                        path:value, component:class name
+                }
+
+
+use <router-outlet></router-outlet> inside root component
+
+
+Dependency  Injection
+----------------------
+To share data between dependent classes
+
+
+
+Angular services
+-----------------
+ng g s service name
+here,    angular -> bankapp -> src -> app -> services (new folder) ...
+ then in terminal..,   ng g s services
+ 
+
+Angular Directives
+-------------------
+To manipulate DOM elements
+
+        a)component directives
+
+        b)structural directives         = to change the structure of page likes as table
+                1)ngFor  
+                2)ngIf  -       for validation
+
+
+Angular forms
+---------------
+
+        a)Template Driven Forms (first design html) - html page designing
+        
+        b)model Driven forms (first ts file -> html design)  -  Adv validation methods
+                1)Reactive form
+                        form group , array , control
+                        - we can directly add validation methods
+                                 ->Add validation
+                                 -> import reactive form modules
+
+
+
+
+local storage
+        -setItem
+        -getItem
+        -removeItem
+
+
+
+
+Parent child relationships
+        parent to child communication = @input
+        child to parent communication = @output
+
+Angular pipes
+        {{value-expression | date [:format [timezone]]}}
+
+
+
+*imp--Frontend and backend Integration
+        import HTTPClientModule - for creating http request
+        inject HTTPClient
+        Using httpclientModule - for making API requests
+          RxJs -Reactive Extension for JavaScript
+          To solve asynchronous request events
+        1)observable(Alternative of promise)
+            a)Resolve -subscribe()
+
+            b)Reject -catch()
 
     

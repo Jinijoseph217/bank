@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Data } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -17,9 +17,9 @@ export class RegistrationComponent implements OnInit {
 
   //register model
   registerForm=this.fb.group({//group
-    uname:[''],//array
-    acno:[''],//array
-    pswd:['']//array
+    uname:['',[Validators.required,Validators.pattern('[a-zA-Z]*')]],//array
+    acno:['',[Validators.required,Validators.pattern('[0-9]*')]],//array(*-regular expressions)
+    pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]]//array
 
     //control goes to register.html
   })
@@ -31,23 +31,39 @@ export class RegistrationComponent implements OnInit {
 
   register(){
    // alert("register clicked")
+  //  console.log(this.registerForm);
+   if(this.registerForm.valid){
 
    var uname=this.registerForm.value.uname;
    var acno=this.registerForm.value.acno;
    var pswd=this.registerForm.value.pswd;
 
-   const result=this.ds.register(acno,uname,pswd);
-   if(result){
-    alert("successfully registered");
+   const result=this.ds.register(acno,uname,pswd)
+   .subscribe((result:any)=>{
+    alert(result.message);
     this.router.navigateByUrl('')
-   }
-   else{
-    alert("something went wrong")
-   }
+   },
+   result=>{
+    alert(result.error.message);
+    this.router.navigateByUrl('registration')
+   })
+
+  //  if(result){
+  //   alert("successfully registered");
+  //   this.router.navigateByUrl('')
+  //  }
+  //  else{
+  //   alert("something went wrong")
+  //  }
 
    
 
     
   }
+  else{
+    console.log(this.registerForm.get('uname')?.errors);
+   
+  }
+}
 
 }

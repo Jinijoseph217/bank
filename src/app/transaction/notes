@@ -15,6 +15,7 @@ a)component Directives
 
 b)structural Directives
   1)ngFor
+  2)ngIf -validation
 
 
 
@@ -30,3 +31,21 @@ b)Model Driven Forms(First design ts files then html )-adv validation methods
    -we can directly add validation methods
        ->add validation
        ->import reactive forms modules
+
+
+
+Local Storage
+   
+   -setItem
+   -getItem
+   -removeItem
+
+parent child relationships
+  parent to child communication-@input()
+  child to parent commuication-@output()
+
+Angular pipes
+  {{value-expression | date [:format [timezone]]  }}
+
+
+

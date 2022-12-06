@@ -17,7 +17,7 @@
       </form>
     </div>
   </nav>
- <div class="wrapper text-center shadow-lg p-3 mb-5 bg-body rounded bg-light">
+ <div class="wrapper text-center shadow-lg p-3 mb-5 bg-body rounded bg-light border border-primary border-10">
     <div class="logo rounded-circle">
         <img src="../../assets/image/bnk.jpg" alt="">
     </div>
@@ -25,15 +25,18 @@
         My Bank
     </div>
     <h6>{{aim}}</h6>
-    <form action="" class="text-center p-3 mt-3 rounded-4 ">
+    <form [formGroup]="loginForm" class="text-center p-3 mt-3 rounded-4 ">
         <div class="form-field d-flex align-content-center m-3 shadow-lg rounded">
-            <input style="margin-left: auto; margin-right: auto;" [(ngModel)]="acno" type="text" name="acno" id="login_acno" [placeholder]="accounts">
+            <input style="margin-left: auto; margin-right: auto;" formControlName="acno" type="text" name="acno" id="login_acno" [placeholder]="accounts">
             <!-- (change)="acnoChange($event)" -->
         </div>
+        <div *ngIf="this.loginForm.get('acno')?.touched&&this.loginForm.get('acno')?.errors" style="color:red;">Invalid User</div>
+
         <div class="form-field d-flex align-items-center m-3 shadow-lg rounded">
-            <input style="margin-left: auto; margin-right: auto;" [(ngModel)]="pswd" type="password" name="password" id="login_pswd" placeholder="Password">
+            <input style="margin-left: auto; margin-right: auto;" formControlName="pswd" type="password" name="password" id="login_pswd" placeholder="Password">
             <!-- (change)="pswdChange($event)"  -->
         </div>
+        <div *ngIf="this.loginForm.get('pswd')?.touched&&this.loginForm.get('pswd')?.errors" style="color:red;">Invalid User</div>
         <button class="btn btn-primary mt-3 shadow-lg rounded" (click)="login()" type="button">Login</button>
     </form>
     <div class="text-center m-3">

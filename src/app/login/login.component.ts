@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 
@@ -11,11 +12,17 @@ export class LoginComponent implements OnInit { //3rd execution
 
   aim='Your perfect banking partner';
   accounts="Enter your account number here ";
-  acno="";
-  pswd="";
+  //register model
+  loginForm=this.fb.group({//group
+    acno:['',[Validators.required]],//array(*-regular expressions)
+    pswd:['',[Validators.required]]//array
+
+    //control goes to register.html
+  })
+
   
   
-  constructor(private router:Router ,private ds:DataService ) { } //1st execution
+  constructor(private router:Router ,private ds:DataService, private fb:FormBuilder ) { } //1st execution
 //dependency injection
 
   ngOnInit(): void { //life cycle hooks-(initial process) //2nd execution
@@ -28,31 +35,54 @@ userDetails:any={ //object of objects
 }
   //userdefined function() //4th execution
 
-acnoChange(event:any){
-  // console.log(event)
-  console.log(event.target.value)
-  this.acno=event.target.value;
-}
+// acnoChange(event:any){
+//   // console.log(event)
+//   console.log(event.target.value)
+//   this.acno=event.target.value;
+// }
 
-pswdChange(event:any){
-  console.log(event.target.value)
-  this.pswd=event.target.value;
-}
+// pswdChange(event:any){
+//   console.log(event.target.value)
+//   this.pswd=event.target.value;
+// }
 
-  login(){
-    // alert('Login Cliked')
+login(){
+  // alert("clicked")
+  if (this.loginForm.valid) {
 
-    var acno=this.acno;
-    var pswd=this.pswd;
+    var acno = this.loginForm.value.acno;
+    var pswd = this.loginForm.value.pswd;
+    const result = this.ds.login(acno, pswd)
+      .subscribe((result:any )=>{
+        localStorage.setItem('currentUser',JSON.stringify(result.currentUser) )
+        localStorage.setItem('currentAcno',JSON.stringify(result.currentAcno) )
+        localStorage.setItem('token',JSON.stringify(result.token) )
 
-   const result=this.ds.login(acno,pswd)
 
-    if(result){
-    alert("login successfull");
-    this.router.navigateByUrl('dashboard');
+        alert(result.message);
+        this.router.navigateByUrl('dashboard');
+      },
+        result=> {
+          alert(result.error.message)
+          this.router.navigateByUrl('')
+
+        }
+      )
   }
 }
 }
+
+
+
+//     if(result){
+//     alert("login successfull");
+//     this.router.navigateByUrl('dashboard');
+//   }
+// }
+// else{
+//   console.log(this.loginForm.get('acno')?.errors);
+ 
+
 
   // login(a:any,p:any){
   //   // alert('Login Cliked')
@@ -72,11 +102,13 @@ pswdChange(event:any){
   //       alert("incorrect password")
   //     }
   //   }
-  //   else{
-  //     alert("user does not existed")
-  //   }
+//     else{
+//       alert("user does not existed")
+//     }
 
-  // }
+//   }
+// }
+
 
 
  

@@ -1,60 +1,129 @@
-<div class="parent">
-   
-    <h1>Welcome {{user}}</h1>
- <div>
-    <a routerLink="/transaction">Viewdetails</a>
- </div>
-    <div class="child">
-        <div class="wrapper text-center shadow-lg p-3 mb-5 bg-body rounded bg-light">
-            <div class="logo">
-                <img src="../../assets/image/bnk.jpg" alt="">
-            </div>
-            <div class="text-center fs-6 fw-bold mt-4 name">
-                Deposit
-            </div>
-            <form action="" class="text-center p-3 mt-3 ">
-                
-                <div class="form-field d-flex align-content-center m-3 shadow-lg rounded">
-                    <input [(ngModel)]="acno" type="text" name="acno" id="dep_acno" placeholder="Account number">
-                </div>
-                <div class="form-field d-flex align-items-center m-3 shadow-lg rounded">
-                    <input [(ngModel)]="pswd" type="password" name="password" id="dep_pswd" placeholder="Password">
-                </div>
-                <div class="form-field d-flex align-content-center m-3 shadow-lg rounded">
-                    <input  [(ngModel)]="amount" type="text" name="amount" id="dep_amount" placeholder="amount">
-                </div>
-                <button class="btn btn-primary mt-3 shadow-lg rounded" (click)="deposit()" type="button">deposit</button>
-            </form>
-            <div class="text-center m-2">
-                <a routerLink="">Sign in</a>
-            </div>
-        </div>
-        
+
+               
+ 
+ <div class="mt-2 text-end">
+    <input type="button" class="btn btn-success  rounded me-md-2 mt-2  text-light" value="logout"
+        (click)="logout()" style="width: 100px;">
+    
+    <input type="button" class="btn btn-danger rounded me-md-2 mt-2  text-light" value="Delete"
+        (click)="delete()"style="width: 100px;">
+    
+</div>
+<div>
+    <h4>Date and time : {{SystemDate | date  : 'short'}}</h4>
     </div>
-    <div class="child"><div class="wrapper text-center shadow-lg p-3 mb-5 bg-body rounded bg-light">
-        <div class="logo">
-            <img src="../../assets/image/bnk.jpg" alt="">
-        </div>
-        <div class="text-center fs-6 fw-bold mt-4 name">
-           Withdraw
-        </div>
-        <form action="" class="text-center p-3 mt-3 ">
-            
-            <div class="form-field d-flex align-content-center m-3 shadow-lg rounded">
-                <input [(ngModel)]="acno1" type="text" name="acno" id="with_acno" placeholder="Account number">
-            </div>
-            <div class="form-field d-flex align-items-center m-3 shadow-lg rounded">
-                <input [(ngModel)]="pswd1" type="password" name="password" id="with_pswd" placeholder="Password">
-            </div>
-            <div class="form-field d-flex align-content-center m-3 shadow-lg rounded">
-                <input  [(ngModel)]="amount1" type="text" name="Amount" id="with_amount" placeholder="Amount">
-            </div>
-            <button class="btn btn-primary mt-3 shadow-lg rounded" (click)="withdraw()" type="button">withdraw</button>
-        </form>
-        <div class="text-center m-2">
-            <a routerLink="">Sign in</a>
-        </div>
-    </div>
-    </div>
+
+<div>
+    <h2 class="text-center"> Welcome {{user}}</h2> <!-- login name display  using string interpolation  -->
+</div>
+<div class="text-center fw-bold fs-5 mt-2">
+    <a routerLink="/transaction">View Transaction Details</a>
 </div>
 
+<app-delete [item]="acno" (onCancel)="onCancel()" (onDelete)="onDelete($event)"></app-delete>
+<!-- <div>
+<h4>Date and time : {{SystemDate | date}}</h4>
+</div> -->
+<div class="row " [ngClass]="acno? 'style1':''">
+    <div class="col-1"></div>
+    <div class="col-4  mt-3 mb-3">
+
+        <form action="" [formGroup]="depositForm"
+            class=" dash mt-5 bg-light border border-primary border-10 shadow-lg rounded  p-5 wrapper ">
+
+            <div class="text-center">
+                <img src="../../assets/image/bnk.jpg"class="w-25 h-25 rounded-pill ">
+            </div>
+            <div class="text-center fw-bold mt-3 ">Deposit</div>
+
+
+            <div>
+                <input formControlName="acno" name="acno" type="text" id="dash_acno" placeholder="Account Number"
+                    class="form-control rounded-pill shadow mt-3">
+            </div>
+            <div style="color:red" *ngIf="this.depositForm.get('acno')?.touched&&this.depositForm.get('acno')?.errors">
+                invalid acno</div>
+
+
+
+
+            <div>
+                <input formControlName="pswd" name="pswd" type="password" id="dash_pswd" placeholder="password"
+                    class="form-control rounded-pill shadow mt-3">
+            </div>
+            <div style="color:red" *ngIf="this.depositForm.get('pswd')?.touched&&this.depositForm.get('pswd')?.errors">
+                invalid password</div>
+
+
+
+
+            <div>
+                <input formControlName="amount" name="amount" type="text" id="dash_amount"
+                    placeholder="Amount for Deposit" class="form-control rounded-pill shadow mt-4">
+            </div>
+            <div style="color:red"
+                *ngIf="this.depositForm.get('amount')?.touched&&this.depositForm.get('amount')?.errors">invalid amount
+            </div>
+
+
+
+
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-primary rounded-pill mt-5 text-light" (click)="deposit()">Deposit
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="col-2"></div>
+
+    <div class="col-4  mt-3 mb-3 ">
+        <form action="" [formGroup]="withdrawForm"
+            class=" dash mt-5 bg-light border border-primary border-10 shadow-lg rounded p-5 wrapper">
+            <div class="text-center">
+                <img src="../../assets/image/bnk.jpg"class="w-25 h-25 rounded-pill ">
+            </div>
+            <div class="text-center fw-bold mt-3 ">Withdraw</div>
+
+
+            <div>
+                <input formControlName="acno1" name="acno" type="text" id="with_acno" placeholder="Account Number"
+                    class="form-control rounded-pill shadow mt-3">
+            </div>
+            <div style="color:red"
+                *ngIf="this.withdrawForm.get('acno1')?.touched&&this.withdrawForm.get('acno1')?.errors">invalid acno
+            </div>
+
+
+
+
+            <div>
+                <input formControlName="pswd1" name="pswd" type="password" id="with_pswd" placeholder="password"
+                    class="form-control rounded-pill shadow mt-3">
+            </div>
+            <div style="color:red"
+                *ngIf="this.withdrawForm.get('pswd1')?.touched&&this.withdrawForm.get('pswd1')?.errors">invalid password
+            </div>
+
+
+            <div>
+                <input formControlName="amount1" name="amount" type="text" id="with_amount"
+                    placeholder="amount to withdraw" class="form-control rounded-pill shadow mt-4">
+            </div>
+
+            <div style="color:red"
+                *ngIf="this.withdrawForm.get('amount1')?.touched&&this.withdrawForm.get('amount1')?.errors">invalid
+                amount</div>
+
+
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-primary rounded-pill mt-5 text-light" (click)="withdraw()">withdraw
+                </button>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-1"></div>
+</div>

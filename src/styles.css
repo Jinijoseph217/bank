@@ -6,6 +6,11 @@ input{
   margin-right: auto;
   padding: 6px;
 }
+body{
+  background:url( 'https://i.postimg.cc/bYBj1dCD/bnk.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
 .wrapper {
   background-color: #FFD369;

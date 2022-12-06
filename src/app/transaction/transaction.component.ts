@@ -20,8 +20,18 @@ transaction:any;
   constructor(private ds:DataService) {
 
     //to get the value of current acno from data service
-    this.acno=this.ds.currentAcno
-    this.transaction=this.ds.getTransaction(this.acno)
+   this.acno=JSON.parse(localStorage.getItem('currentAcno') || '');//localstorage
+   this.transaction=this.ds.getTransaction(this.acno)
+   .subscribe((result:any)=>{
+    this.transaction=result.transaction;
+   },
+   result=>{
+    alert(result.error.message)
+   })
+
+
+    // this.acno=this.ds.currentAcno
+    // this.transaction=this.ds.getTransaction(this.acno)
     console.log(this.transaction)
 
   
